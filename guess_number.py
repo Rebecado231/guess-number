@@ -12,38 +12,43 @@ UPPER_BOUND = 100
 
 def generate_secret() -> int:
     """Devuelve un número aleatorio entre LOWER_BOUND y UPPER_BOUND (incluidos)."""
-
-    # TODO:
-    #     - Utiliza random.randint.
-    #     - Elimina la excepción y devuelve el número generado.
-    raise NotImplementedError
+    random_number = random.randint(1, 100)
+    
+    return random_number
 
 
 def get_user_guess() -> int:
     """Solicita al usuario un número y lo devuelve como int."""
-
-    # TODO:
-    #     1. Usa input() para leer del usuario.
-    #     2. Valida que sea un número dentro del rango; si no, vuelve a pedirlo.
-    #     3. Gestiona ValueError cuando el usuario escriba texto no numérico.
-    raise NotImplementedError
+    while True:
+        try:
+            user_guess = int(input("Write a number between 1 and 100: "))
+            if user_guess >= LOWER_BOUND and user_guess <= UPPER_BOUND:
+                return user_guess
+            else:
+                print("Try again with a number between 1 and 100")
+        except ValueError:
+            print("That's not a valid number. Please try again.")
 
 
 def main() -> None:
     """Bucle principal del juego."""
-
-    # TODO:
-    #     1. Llama a generate_secret() para obtener el número a adivinar.
-    #     2. Inicia un contador de intentos en 0.
-    #     3. Mientras el usuario no acierte:
-    #          a. Llama a get_user_guess().
-    #          b. Incrementa intentos.
-    #          c. Imprime 'Más alto' o 'Más bajo' según corresponda.
-    #     4. Felicita al usuario e indica cuántos intentos necesitó.
-    #     5. Pregunta si quiere jugar otra vez ('s' / 'n').
-    #        Si 's', reinicia el juego; si 'n', imprime '¡Hasta luego!' y sale.
-
-    raise NotImplementedError
+    attempt_num = 0
+    real_num = generate_secret()
+    while True:
+        user_num = get_user_guess()
+        attempt_num += 1
+        if user_num < real_num:
+            print("Try a higher number")
+        elif user_num > real_num:
+            print("Try a lower number")
+        else:
+            break
+    print("Congrats! You get it just in " + str(attempt_num) + " attempts.")
+    play_again = input("Play again? Y/N")
+    if play_again.strip().upper() == "Y":
+        main()
+    else:
+        print("Bye bye!")
 
 
 if __name__ == "__main__":
