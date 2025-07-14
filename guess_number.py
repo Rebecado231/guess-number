@@ -5,6 +5,7 @@ Ejecuta 'python guess_number.py' para probar tu implementación.
 """
 
 import random
+import json
 
 LOWER_BOUND = 1
 UPPER_BOUND = 100
@@ -16,6 +17,9 @@ def generate_secret() -> int:
     
     return random_number
 
+def ask_name() -> str:
+    user_name = input("User name: ")
+    return user_name
 
 def get_user_guess() -> int:
     """Solicita al usuario un número y lo devuelve como int."""
@@ -30,7 +34,7 @@ def get_user_guess() -> int:
             print("That's not a valid number. Please try again.")
 
 
-def main() -> None:
+def main() -> int:
     """Bucle principal del juego."""
     attempt_num = 0
     real_num = generate_secret()
@@ -49,7 +53,31 @@ def main() -> None:
         main()
     else:
         print("Bye bye!")
+    return attempt_num
 
 
 if __name__ == "__main__":
-    main()
+    
+    attempts = main() 
+    att_record = []
+    att_record.append(attempts)
+    total_att = sum(att_record)
+    att_average = total_att / len(att_record)
+
+
+
+player_sheet = {
+    "player" : "user_name"
+    "attempts" : [] 
+    }
+
+def sheet_register (att_record, total_att, att_average):
+    attempts = {
+        "Record" = att_record
+        "Total" = total_att 
+        "Average" = att_average
+    }
+
+with open (game_record.json, "w" ) as file:
+        json.dump (player_sheet, file)
+print ("Game saved")
